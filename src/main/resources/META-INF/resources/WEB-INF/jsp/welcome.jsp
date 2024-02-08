@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" >
+   <title>Welcome</title>
 </head>
 <body>
-    <div>Welcome to VS45</div>
-    <div>Your Name is ${name}</div>
+    <div class="container">
+    <h1>Welcome ${name}</h1>
+    
     <div> <a href="/list-todos">manage</a> your todo here</div>
+</div>
 </body>
 </html>
