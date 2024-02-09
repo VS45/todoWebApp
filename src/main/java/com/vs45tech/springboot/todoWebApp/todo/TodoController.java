@@ -3,6 +3,8 @@ package com.vs45tech.springboot.todoWebApp.todo;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,15 +26,14 @@ public class TodoController {
 
     @RequestMapping("list-todos")
     public String getAllTodos(ModelMap model) {
-        String username=(String)model.get("name");
-        List<Todo> todos = todoService.findByUserName(username);
+        List<Todo> todos = todoService.findByUserName(getLoggedInUsername());
         model.put("todos", todos);
         return "listTodos";
     }
 
     @RequestMapping(value = "add-todo",method = RequestMethod.GET)
     public String showNewTodos(ModelMap model) {
-        Todo todo=new Todo(0, (String)model.get("name"), "", LocalDate.now().plusYears(1), false);
+        Todo todo=new Todo(0, getLoggedInUsername(), "", LocalDate.now().plusYears(1), false);
         model.put("todo",todo);
         return "todo";
     }
@@ -43,8 +44,7 @@ public class TodoController {
        System.out.println(result);
         return "todo";
       }
-        String username=(String)model.get("name");
-       todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), false);
+       todoService.addTodo(getLoggedInUsername(), todo.getDescription(), todo.getTargetDate(), false);
         return "redirect:list-todos";
     }
     @RequestMapping("delete-todo")
@@ -65,9 +65,13 @@ public class TodoController {
             System.out.println(result);
              return "todo";
            }
-           String username=(String)model.get("name");
-           todo.setUsername(username);
+        //   String username=(String)model.get("name");
+           todo.setUsername(getLoggedInUsername());
             todoService.updateTodo(todo);
         return "redirect:list-todos";
+    }
+     private String getLoggedInUsername(){
+   Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 }

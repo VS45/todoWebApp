@@ -16,7 +16,7 @@ public class TodoService {
          "Get AWS Certified", LocalDate.now().plusYears(1), false));
         todoList.add(new Todo(++todoCount, "vs45Tech",
          "Learn DevOps", LocalDate.now().plusYears(2), false));
-        todoList.add(new Todo(++todoCount, "vs45",
+        todoList.add(new Todo(++todoCount, "vs45Tech",
          "Learn Full Stack", LocalDate.now().plusYears(3), false));
     }
     public List<Todo> findTodosList(){
