@@ -12,18 +12,19 @@ public class TodoService {
     private static List<Todo> todoList=new ArrayList<>();
     private static int todoCount=0;
     static{
-        todoList.add(new Todo(++todoCount, "vs45 Tech Limited",
-         "Learn AWS", LocalDate.now().plusYears(1), false));
-        todoList.add(new Todo(++todoCount, "vs45 Tech Limited",
+        todoList.add(new Todo(++todoCount, "vs45Tech",
+         "Get AWS Certified", LocalDate.now().plusYears(1), false));
+        todoList.add(new Todo(++todoCount, "vs45Tech",
          "Learn DevOps", LocalDate.now().plusYears(2), false));
-        todoList.add(new Todo(++todoCount, "vs45 Tech Limited",
+        todoList.add(new Todo(++todoCount, "vs45",
          "Learn Full Stack", LocalDate.now().plusYears(3), false));
     }
     public List<Todo> findTodosList(){
         return todoList;
     }
     public List<Todo> findByUserName(String username){
-        return todoList;
+        Predicate <? super Todo> predicate=todo->todo.getUsername().equalsIgnoreCase(username);
+        return todoList.stream().filter(predicate).toList();
     }
     public void addTodo(String username,String description, LocalDate targetDate,boolean done){
 int count=todoList.size();
@@ -32,5 +33,13 @@ int count=todoList.size();
     public void deleteById(int id){
         Predicate <? super Todo> predicate=todo->todo.getId()==id;
 todoList.removeIf(predicate);
+    }
+    public Todo findById(int id){
+        Predicate <? super Todo> predicate=todo->todo.getId()==id;
+return todoList.stream().filter(predicate).findFirst().get();
+    }
+    public void updateTodo(Todo todo){
+        deleteById(todo.getId());
+        todoList.add(todo);
     }
 }
