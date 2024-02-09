@@ -1,4 +1,4 @@
-package com.vs45tech.springboot.todoWebApp.login;
+package com.vs45tech.springboot.todoWebApp.welcome;
 
 
 import org.springframework.security.core.Authentication;
